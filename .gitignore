@@ -1,0 +1,16 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment variables
+.env
+
+# Database
+expense_tracker.db
+
+# Frontend build output
+frontend/dist/
+frontend/node_modules/
