@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
-export default function Login({ onSubmit, error, loading, onToggleMode }) {
-  const [values, setValues] = useState({ email: '', password: '' })
+export default function Login({ initialValues, onSubmit, error, loading, onToggleMode }) {
+  const [values, setValues] = useState(initialValues)
 
   const update = (key) => (event) => setValues({ ...values, [key]: event.target.value })
 

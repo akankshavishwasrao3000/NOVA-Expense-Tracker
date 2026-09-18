@@ -18,6 +18,7 @@ const aiNav = ['financial', 'budget', 'savings', 'spending']
 export default function App() {
   const [auth, setAuth] = useState(null)
   const [mode, setMode] = useState('login')
+  const [loginValues, setLoginValues] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [page, setPage] = useState(() => window.location.hash.replace('#', '') || 'dashboard')
@@ -65,6 +66,7 @@ export default function App() {
     try {
       if (mode === 'signup') {
         await api.signup(values)
+        setLoginValues({ email: values.email, password: values.password })
         setMode('login')
         setError('Account created. Please log in.')
       } else {
@@ -105,7 +107,7 @@ export default function App() {
 
   if (!auth) {
     return mode === 'login' ? (
-      <Login onSubmit={submitAuth} error={error} loading={loading} onToggleMode={setMode} />
+      <Login initialValues={loginValues} onSubmit={submitAuth} error={error} loading={loading} onToggleMode={setMode} />
     ) : (
       <Signup onSubmit={submitAuth} error={error} loading={loading} onToggleMode={setMode} />
     )

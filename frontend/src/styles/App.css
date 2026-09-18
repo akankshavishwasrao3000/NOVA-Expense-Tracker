@@ -335,6 +335,7 @@ td.amount { color: #2b3029; }
 .auth-card .field input { color: #292e27; border-color: #dfe2d9; background: #fff; }
 .auth-card .field input:focus { border-color: #e1b51b; background: #fffdf1; box-shadow: 0 0 0 3px rgba(225, 181, 27, .15); }
 .auth-card .btn.primary { color: #3a3008; background: #f0c632; }
+.auth-card .alert.success { color: #27633f; border-color: #b9dec5; background: #effaf1; text-align: left; }
 
 /* Premium NOVA theme: warm white type, charcoal surfaces, and restrained gold. */
 :root {
