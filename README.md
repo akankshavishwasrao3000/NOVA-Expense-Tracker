@@ -17,6 +17,13 @@ NOVA Expense Tracker is a full-stack personal finance application for recording,
 - Financial, budget, savings, and spending analysis pages
 - Responsive layout for desktop and mobile screens
 
+## Live Links
+
+- **Live Application:** https://nova-expense-tracker-six.vercel.app
+- **Live Backend API (Render):** https://nova-expense-tracker.onrender.com
+- **Backend Health Check:** https://nova-expense-tracker.onrender.com/api/health
+- **GitHub Repository:** https://github.com/akankshavishwasrao3000/NOVA-Expense-Tracker
+
 ## Technology
 
 | Layer | Technology |
