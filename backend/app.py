@@ -18,6 +18,11 @@ from database import get_db as open_db
 
 app = Flask(__name__)
 app.secret_key = config.SECRET_KEY
+
+app.config["SESSION_COOKIE_SAMESITE"] = "None"
+app.config["SESSION_COOKIE_SECURE"] = True
+app.config["SESSION_COOKIE_HTTPONLY"] = True
+
 CORS(app, supports_credentials=True, origins=config.FRONTEND_ORIGINS)
 
 user_budgets = {}
