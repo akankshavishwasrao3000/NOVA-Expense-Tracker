@@ -24,21 +24,50 @@ NOVA Expense Tracker is a full-stack personal finance application for recording,
 - **Backend Health Check:** https://nova-expense-tracker.onrender.com/api/health
 - **GitHub Repository:** https://github.com/akankshavishwasrao3000/NOVA-Expense-Tracker
 
+## Live Deployment
+
+| Component | Platform | Details |
+| --- | --- | --- |
+| Frontend | **Vercel** | Static React/Vite build deployed from the `frontend/dist` directory |
+| Backend API | **Render** | Flask application served via Gunicorn with environment-based configuration |
+| Database | **Aiven MySQL** | Managed cloud MySQL; Flask connects using `MYSQL_*` environment variables set on Render |
+| Source Control | **GitHub** | Single repository containing both `backend/` and `frontend/` directories |
+
+All environment variables (database credentials, `SECRET_KEY`, `GROQ_API_KEY`, `FRONTEND_ORIGINS`) are configured in each platform's environment settings and are never committed to the repository.
+
 ## Technology
 
 | Layer | Technology |
 | --- | --- |
 | Frontend | React 19, Vite, JavaScript, CSS |
 | Backend | Python, Flask 3, Flask-CORS |
-| Database | MySQL |
+| Database | MySQL (Aiven MySQL in production) |
 | Authentication | Flask server-side sessions and Werkzeug password hashing |
 | Reports | ReportLab and Python CSV utilities |
 | AI | Groq API, with local monthly expense aggregation |
 | Voice input | Browser Web Speech API |
+| Hosting | Vercel (frontend), Render (backend), Aiven (database), GitHub (source) |
 
 ## Architecture
 
-The browser communicates with Flask through the `/api` endpoints. The frontend never connects directly to MySQL. Flask validates the session, reads and writes user-owned records, and returns JSON responses. Profile images are served from Flask's `backend/static/profile_pics` directory.
+The browser communicates with Flask through the `/api` endpoints. **React does not connect directly to MySQL.** Flask validates the session, reads and writes user-owned records, and returns JSON responses. Profile images are served from Flask's `backend/static/profile_pics` directory.
+
+### Production Architecture
+
+```text
+┌─────────────────┐       HTTPS        ┌────────────────────┐       MySQL       ┌──────────────────┐
+│  Vercel          │  ←─────────────→  │  Render             │  ←─────────────→  │  Aiven MySQL     │
+│  (React build)   │  VITE_API_URL     │  (Flask + Gunicorn) │  MYSQL_* env vars │  (managed cloud) │
+└─────────────────┘                    └────────────────────┘                    └──────────────────┘
+                                              │
+                                              ├── GROQ_API_KEY ──→ Groq API (optional)
+                                              └── Static files (profile pics, exports)
+```
+
+- The Vercel-hosted React build sends all API requests to the Render backend URL (`VITE_API_URL`).
+- Render runs Flask behind Gunicorn. All database credentials (`MYSQL_HOST`, `MYSQL_PORT`, etc.) point to the Aiven MySQL instance.
+- Aiven provides a managed MySQL database accessible over TLS.
+- The Groq API is called only when `GROQ_API_KEY` is configured and the user requests an AI-generated analysis.
 
 ## Why We Built This Project
 
